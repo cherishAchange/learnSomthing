@@ -55,7 +55,7 @@ io.sockets.on('connection', function (socket) {
       });
     // new message get
       socket.on('postMsg', function (msg, color) {
-        console.log(msg)
+        console.log('name',msg)
         socket.broadcast.emit('newMsg', socket.nickname, msg, color);
       });
     // new image get

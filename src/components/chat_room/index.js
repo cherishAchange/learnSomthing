@@ -7,12 +7,20 @@ import './index.scss';
 
 class Chat_room extends Component {
 
+    static contextTypes = {
+        store: PropTypes.object,
+    };
+
     constructor(){
         super();
         this.state = {
             message: []
         };
         this._sendMessage = this._sendMessage.bind(this);
+    }
+
+    componentWillMount(){
+        this.userSelf = this.context.store.getState().userinfo;
     }
 
     componentDidMount(){
@@ -22,11 +30,11 @@ class Chat_room extends Component {
           // 测试是否链接上websocket
         that.socket.on('connect', () => console.log('连接socket服务器成功'));
 
+        //get message
         that.socket.on('newMsg', (user, msg, color) => {
             let {message} = this.state, obj = {
-                message: msg,
-                fromWhere: 'left',
-                user: ""
+                message: msg.message,
+                username: msg.username
             };
             message.push(obj);
             that.setState({message});
@@ -35,17 +43,18 @@ class Chat_room extends Component {
         window.addEventListener('keydown', this._sendMessage, false);
     }
 
+    //send message
     _sendMessage = (e) => {
         if(e.keyCode === 13){
             e.preventDefault();
-            let {message} = this.state, obj = {
-                message: e.target.value,
-                fromWhere: 'right',
-                user: ""
-            };
+            let {message} = this.state, 
+                obj = {
+                    message: e.target.value,
+                    username: this.userSelf.username
+                };
             message.push(obj);
             this.setState({message});
-            this.socket.emit('postMsg', e.target.value, 'color');
+            this.socket.emit('postMsg', obj, 'color');
             e.target.value = null;
         }
       }
@@ -60,11 +69,16 @@ class Chat_room extends Component {
                             message.map((msgBody, index) => {
                                 let cls = classNames({
                                     "normal": true,
-                                    "gotMessage": msgBody.fromWhere === 'left',
-                                    "sendMessage": msgBody.fromWhere === 'right'
+                                    "gotMessage": msgBody.username !== this.userSelf.username,
+                                    "sendMessage": msgBody.username === this.userSelf.username
                                 });
                                 return (
-                                    <li key={index}><span className={cls}>{msgBody.message}</span></li>
+                                    <li key={index}>
+                                        <div className={cls}>
+                                            <span className="_username">{`@${msgBody.username}`}</span>
+                                            <span>{msgBody.message}</span>
+                                        </div>
+                                    </li>
                                 );
                             })
                         }

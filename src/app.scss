@@ -32,7 +32,9 @@
                 left: -1px;
                 width: 100%;
                 border: 1px solid #cccccc;
-                border-top: none; 
+                border-top: none;
+                z-index: 1;
+                background: #ffffff; 
                 li:hover{
                     background: #F0F0F0;
                 }

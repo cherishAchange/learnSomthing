@@ -1,17 +1,34 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 import './app.scss';
 
 class App extends React.Component {
 
+    static contextTypes = {
+        store: PropTypes.object,
+        router: PropTypes.object
+    };
+
+    constructor(){
+        super();
+        this._goOut = this._goOut.bind(this);
+    }
+
+    //tuichu
+    _goOut(){
+        sessionStorage.clear('tocken');
+        this.context.router.push('/login');
+    }
+
     render(){
+        let {userinfo} = this.context.store.getState();
         return (
             <div className="work_space">
                 <nav className="nav_bar">导航
-                    <div className="userName">USERNAME
+                    <div className="userName">
+                        {userinfo.username}
                         <ul className="user_menu">
-                            <li>退出</li>
-                            <li>重新登录</li>
+                            <li onClick={this._goOut}>退出</li>
                         </ul>
                     </div>
                 </nav>
