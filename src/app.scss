@@ -48,14 +48,22 @@
             background: #EEEED1;
             .menu{
                 .menu_item{
-                    padding: 10px 30px 10px 20px;
                     white-space: nowrap;
-                    overflow: hidden;
                     text-overflow: ellipsis;
+                    &:hover{
+                        background: #EE7942;
+                    }
                     a{
+                        padding: 10px 30px 10px 20px;
+                        display: block;
                         text-decoration: none;
+                        overflow-wrap: break-word;
+                        max-width: 200px;
                     }
                     cursor: pointer;
+                }
+                ._chosed{
+                    background: #EE7942;
                 }
             }
         }

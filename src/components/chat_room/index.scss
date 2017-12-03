@@ -15,26 +15,43 @@
             padding: 0;
             margin: 0;
             li{
-                padding: 5px;
                 overflow: hidden;
             }
             .normal{
                 display: inline-block;
-                line-height: 26px;
                 padding: 6px;
                 border: 1px solod #cccccc;
                 border-radius: 3px;
-                background: #000000;
-                opacity: .5;
-                color: #ffffff;
+                max-width: 200px;
+                overflow-wrap: break-word;
                 ._username{
                     display: block;
                     font-size: 12px;
                     color: red;
+                    text-align: right;
+                    line-height: 18px;
+                    padding: 2px 5px;
+                }
+                ._message{
+                    display: block;
+                    line-height: 26px;
+                    color: #ffffff;
+                    background: black;
+                    opacity: .5;
+                    padding: 2px 5px;
+                    border-radius: 6px;
                 }
             }
             .sendMessage{
+                ._username{
+                    text-align: right;
+                }
                 float: right;
+            }
+            .gotMessage{
+                ._username{
+                    text-align: left;
+                }
             }
         }
     }

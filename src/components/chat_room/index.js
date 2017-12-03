@@ -76,7 +76,7 @@ class Chat_room extends Component {
                                     <li key={index}>
                                         <div className={cls}>
                                             <span className="_username">{`@${msgBody.username}`}</span>
-                                            <span>{msgBody.message}</span>
+                                            <span className="_message">{msgBody.message}</span>
                                         </div>
                                     </li>
                                 );

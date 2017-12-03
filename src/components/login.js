@@ -19,10 +19,16 @@ class Login extends Component {
             let obj = {
                 "username": this.username.value,
                 "password": this.password.value
-            };
-            sessionStorage.setItem('tocken', JSON.stringify(obj));
-            this.context.store.dispatch({type: LOGIN, text: "userinfo"});
-            hashHistory.push('/');
+            }, self = this;
+            fetch('/validate', obj).then((response) => {
+                response.json().then(function(data) {
+                    if(data.loging === true){
+                        sessionStorage.setItem('tocken', JSON.stringify(obj));
+                        self.context.store.dispatch({type: LOGIN, text: "userinfo"});
+                        hashHistory.push('/');
+                    }
+                });
+            });
         }
     }
 
@@ -41,6 +47,7 @@ class Login extends Component {
                     </div>
                     <div className="_input operate_but">
                         <button className="_button" onClick={this._login}>login</button>
+                        <button className="_button">register</button>
                         <button className="_button">cencal</button>
                     </div>
                 </div>
