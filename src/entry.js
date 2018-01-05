@@ -9,6 +9,7 @@ import First from './components/first/index';
 import Second from './components/second/index';
 import Chat_room from './components/chat_room/index';
 import Login from './components/login';
+import Index from './components/index';
 
 const isLogin = (nextState, replaceState) => {
     let tocken = sessionStorage.getItem('tocken');
@@ -20,6 +21,7 @@ const isLogin = (nextState, replaceState) => {
 const provider =  <Provider store={store}>
 <Router history={hashHistory}>
     <Route path='/' component={App} onEnter={isLogin}>
+        <IndexRoute component={Index}/>
         <Route path='first' component={First}/>
         <Route path='second' component={Second}/>
         <Route path='chat_room' component={Chat_room}/>
