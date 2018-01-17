@@ -1,8 +1,9 @@
-import {Add_NUMBER, REDUCE_NUMBER} from '../action/action_a';
+import {Add_NUMBER, REDUCE_NUMBER, LOGIN} from '../action/action_a';
 
 const init = {
     age: 23,
-    name: "taibowen"
+    name: "taibowen",
+    userinfo: {}
 }
 
 const reducer = function(state = init, action){
@@ -16,6 +17,11 @@ const reducer = function(state = init, action){
             obj = {...state};
             obj[action.text]-=1;
             return obj;
+        case LOGIN:
+            let tocken = JSON.parse(sessionStorage.getItem('tocken'));
+            obj = {...state};
+            obj[action.text] = tocken;
+            return obj; 
         default:
             return state;
     }

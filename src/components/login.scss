@@ -1,0 +1,25 @@
+.login_page{
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 128, 58, .5);
+    .login_box{
+        width: auto;
+        height: auto;
+        border: 1px solid #cccccc;
+        border-radius: 5px;
+        position: fixed;
+        top: 20%;
+        right: 2%;
+        ._input{
+            height: auto;
+            padding: 10px;
+            overflow: hidden;
+        }
+        .operate_but{
+            ._button{
+                float: right;
+                margin-right: 10px;
+            }
+        }
+    }
+}
