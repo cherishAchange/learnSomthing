@@ -46,6 +46,7 @@ class App extends React.Component {
                             <li className={`menu_item ${this._getStyle('/first')}`}><Link to="/first">第一个</Link></li>
                             <li className={`menu_item ${this._getStyle('/second')}`}><Link to="/second">第二个</Link></li>
                             <li className={`menu_item ${this._getStyle('/chat_room')}`}><Link to="/chat_room">聊天室</Link></li>
+                            <li className={`menu_item ${this._getStyle('/html_newTag')}`}><Link to="/html_newTag">测试HTML5.2新标签</Link></li>
                         </ul>
                     </div>
                     <div className="main_content">
