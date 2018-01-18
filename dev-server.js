@@ -11,7 +11,7 @@ const options = {
 	host: 'localhost',
 	quiet: true,
 	stats: {
-		colors: 1
+		colors: false
 	}
 };
 
