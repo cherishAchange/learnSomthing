@@ -22,7 +22,7 @@ function validateLogin(req, res){
       });
   }
   MongoClient.connect(DB_CONN_STR, function(err, db) {
-    console.log("连接成功！");
+    console.log("连接成功啦！");
     selectData(db, function(result) {
         console.log(typeof result);
         res.writeHead(200);

@@ -43,9 +43,10 @@
     }
     .content{
         display: flex;
+        height: 100%;
         .side_nav{
             width: 200px;
-            background: #EEEED1;
+            background: rgb(38, 9, 105);
             .menu{
                 .menu_item{
                     white-space: nowrap;
