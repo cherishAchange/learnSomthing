@@ -1,12 +1,14 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const CleanWebpackPligin = require('clean-webpack-plugin');
 module.exports = {
 	entry: {
 		main: "./src/entry.js"
 	},
 	output: {
-		path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, '/dist'),
+    publicPath: '/',
 		filename: "[name].js"
 	},
 	module: {
@@ -27,12 +29,15 @@ module.exports = {
 		]
 	},
 	plugins: [
-		new webpack.HotModuleReplacementPlugin(),
+    //new CleanWebpackPligin(['dist']),
+    //new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
 		new HtmlWebpackPlugin({
-            title: 'redux',
+      title: 'redux',
 			template: './src/index.html',
-            filename: 'index.html',
-            hash: false
+      filename: 'index.html',
+      hash: true
 		})
 	]
 }

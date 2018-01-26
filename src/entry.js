@@ -20,6 +20,21 @@ const isLogin = (nextState, replaceState) => {
     }
 };
 
+if(module.hot){
+  console.log(module);
+  console.log(module.hot.status())
+  console.log(module.hot.status())
+  module.hot.addStatusHandler(status => {
+    console.log('咋了', status);
+  })
+  module.hot.check(true).then(outdatedModules => {
+    // 超时的模块……
+    console.log(outdatedModules);
+  }).catch(error => {
+    // 捕获错误
+  });
+}
+
 const provider =  <Provider store={store}>
 <Router history={hashHistory}>
     <Route path='/' component={App} onEnter={isLogin}>

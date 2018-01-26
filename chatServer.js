@@ -1,6 +1,25 @@
 var http = require('http');
 const socketIo = require('socket.io');
 const fs = require('fs');
+const webpack = require('webpack');
+const webpackConfig = require('./webpack.config');
+const compiler = webpack(webpackConfig);
+const WebpackDevMiddleware = require('webpack-dev-middleware');
+const WebpackHotMiddleware = require('webpack-hot-middleware');
+
+WebpackDevMiddleware(compiler, {
+  noInfo: false, 
+  publicPath: webpackConfig.output.publicPath
+});
+
+WebpackHotMiddleware(compiler, {
+  log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
+});
+console.log('00000000000')
+console.log('publicPath', webpackConfig.output.publicPath);
+console.log('00000000000')
+console.log('__dirname', __dirname);
+console.log('00000000000')
 
 //lianjie db
 function validateLogin(req, res){
@@ -36,10 +55,11 @@ var server = http.createServer(handler);
 
 function handler (req, res) {
     if(req.url === '/'){
-        fs.readFile(__dirname + '/dist/index.html',
+      console.log('读取起源')
+        fs.readFile(__dirname, '/dist/index.html',
         function (err, data) {
           if (err) {
-            res.writeHead(500);
+            res.writeHead(400);
             return res.end('Error loading index.html');
           }
           res.writeHead(200);
@@ -49,7 +69,7 @@ function handler (req, res) {
         fs.readFile(__dirname + '/dist/' + req.url,
         function (err, data) {
           if (err) {
-            res.writeHead(500);
+            res.writeHead(400);
             return res.end('Error loading index.html');
           }
           res.writeHead(200);
