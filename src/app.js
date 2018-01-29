@@ -11,7 +11,7 @@ class App extends React.Component {
 
     constructor(){
         super();
-        this.routerList = ['/first', '/second', '/chat_room'];
+        this.routerList = ['/first', '/second', '/chat_room', '/html_newTag', '/d3_example'];
         this._goOut = this._goOut.bind(this);
     }
 
@@ -47,6 +47,7 @@ class App extends React.Component {
                             <li className={`menu_item ${this._getStyle('/second')}`}><Link to="/second">第二个</Link></li>
                             <li className={`menu_item ${this._getStyle('/chat_room')}`}><Link to="/chat_room">聊天室</Link></li>
                             <li className={`menu_item ${this._getStyle('/html_newTag')}`}><Link to="/html_newTag">测试HTML5.2新标签</Link></li>
+                            <li className={`menu_item ${this._getStyle('/d3_example')}`}><Link to="/d3_example">D3示例</Link></li>
                         </ul>
                     </div>
                     <div className="main_content">

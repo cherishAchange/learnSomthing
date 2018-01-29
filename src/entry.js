@@ -9,6 +9,7 @@ import First from './components/first/index';
 import Second from './components/second/index';
 import Html_newTag from './components/html_5.2_newTag/index'
 import Chat_room from './components/chat_room/index';
+import D3_example from './components/learn_d3/index';
 import Login from './components/login';
 import Index from './components/index';
 
@@ -20,29 +21,19 @@ const isLogin = (nextState, replaceState) => {
     }
 };
 
-if(module.hot){
-  console.log(module);
-  console.log(module.hot.status())
-  console.log(module.hot.status())
-  module.hot.addStatusHandler(status => {
-    console.log('咋了', status);
-  })
-  module.hot.check(true).then(outdatedModules => {
-    // 超时的模块……
-    console.log(outdatedModules);
-  }).catch(error => {
-    // 捕获错误
-  });
+const isJoin = (nextState, replaceState) => {
+  return "true";
 }
-
+//onEnter={isLogin}
 const provider =  <Provider store={store}>
 <Router history={hashHistory}>
-    <Route path='/' component={App} onEnter={isLogin}>
+    <Route path='/' component={App} >   
         <IndexRoute component={Index}/>
         <Route path='first' component={First}/>
         <Route path='second' component={Second}/>
-        <Route path='chat_room' component={Chat_room}/>
+        <Route path='chat_room' component={Chat_room} onEnter={isJoin}/>
         <Route path='html_newTag' component={Html_newTag}/>
+        <Route path='d3_example' component={D3_example}/>
     </Route>
     <Route path="/login" component={Login}/>
 </Router>
