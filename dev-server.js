@@ -24,16 +24,19 @@ server.listen(port, 'localhost', function(data){
 });
 
 server.use('/', function(req, res, next){
-	console.log(req.url);
-	fs.readFile('./source/response.json', function(err, data){
-		if(err){
-			res.writeHead(404, {"Content-Type": "text/javascript"});
-		}else{
-			res.writeHead(200, {"Content-Type": "text/javascript"});
-			res.write(JSON.stringify(data));
-		}
-		res.end();
-	})
+  console.log('dizhi', req.url);
+  if(req.url.indexOf('/api') === 0){
+    let path = req.url.slice(4, req.url.length);
+    fs.readFile(`./src/data/${path}.json`, function(err, data){
+      if(err){
+        res.writeHead(404, {"Content-Type": "application/json"});
+      }else{
+        res.writeHead(200, {"Content-Type": "application/json"});
+        res.write(JSON.stringify(data));
+      }
+      res.end();
+    })
+  }
 });
 server.listen(port);
 

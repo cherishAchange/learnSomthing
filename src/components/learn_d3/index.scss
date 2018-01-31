@@ -8,4 +8,10 @@
   #pathEle{
     border-radius: 3px;
   }
+  .zoom_to_domin{
+    .area {
+      fill: steelblue;
+      clip-path: url(#clip);
+    }
+  }
 }

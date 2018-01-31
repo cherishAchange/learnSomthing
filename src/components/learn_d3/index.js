@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import * as d3 from 'd3';
 import './index.scss';
 import { setInterval, clearInterval } from 'timers';
+import { zoom_to_domin } from './data';
 
 export default class D3_example extends Component {
 
@@ -33,16 +34,18 @@ export default class D3_example extends Component {
 
   componentDidMount(){
     let path_order = 1;
-    const timer = setInterval(() => {
-      if(!this.pathEle){
-        this.pathEle = document.getElementById("pathEle");
-      }
-      this.setState({path: this.path.slice(0, path_order).join(' ')}, () => {
-        path_order++;
-        if(path_order > this.path.length) clearInterval(timer);
-      });
-    }, 1000);
-    this.draw_line();
+    // const timer = setInterval(() => {
+    //   if(!this.pathEle){
+    //     this.pathEle = document.getElementById("pathEle");
+    //   }
+    //   this.setState({path: this.path.slice(0, path_order).join(' ')}, () => {
+    //     path_order++;
+    //     if(path_order > this.path.length) clearInterval(timer);
+    //   });
+    // }, 1000);
+    //this.draw_line();
+    //this.zoom_to_domin();
+    this.pie_chart();
   }
 
   draw(){
@@ -73,9 +76,124 @@ export default class D3_example extends Component {
       .enter();      //实例化元素
     let g = svg.append('g').attr('class', 'mt_g');
     g.append('circle')
-      .attr('r', (d, i) => { console.log('i:', i); return d.startAngle });
+      .attr('r', (d, i) => { return d.startAngle });
     g.append('text')
-      .attr('value', (d, i) => { console.log('d:', d); return d.value });
+      .attr('value', (d, i) => { return d.value });
+  }
+
+  zoom_to_domin(){
+    let svg = d3.select('.zoom_to_domin').append('svg')
+      .attr('width', 960)        //设置属性
+      .attr('height', 500);
+
+    let margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = +svg.attr("width") - margin.left - margin.right,
+    height = +svg.attr("height") - margin.top - margin.bottom;
+
+    let parseDate = d3.timeParse("%b %Y");
+
+    let x = d3.scaleTime().range([0, width]),   //创建时间线性比例尺
+    y = d3.scaleLinear().range([height, 0]);    //创建定量线性比例尺
+
+    let xAxis = d3.axisBottom(x),    //创建一个下边的轴
+    yAxis = d3.axisLeft(y);        //创建一个左边的轴
+    let ryAxis = d3.axisRight(y);
+
+    let zoom = d3.zoom()
+      .scaleExtent([1, 32])
+      .translateExtent([[0, 0], [width, height]])
+      .extent([[0, 0], [width, height]])
+      // .on("zoom", () => {
+      //   let t = d3.event.transform, xt = t.rescaleX(x);
+      //   g.select(".area").attr("d", area.x(function(d) { return xt(d.date); }));
+      //   g.select(".axis--x").call(xAxis.scale(xt));
+      // });
+    
+    let area = d3.area()   //创建一个面积
+      .curve(d3.curveMonotoneX)   //设置曲线插值器，d3.curveMonotoneX--立方样条。假设y是单调的，保持x的单调性
+      .x(function(d) { return x(d.date); })   //设置 x0 和 x1 访问器。
+      .y0(height)  //设置基线的 y 访问器。
+      .y1(function(d) { return y(d.price); });   //设置顶线的 y 访问器。
+
+    svg.append("defs").append("clipPath")
+      .attr("id", "clip")
+    .append("rect")
+      .attr("width", width)
+      .attr("height", height);
+
+    let g = svg.append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    let data = zoom_to_domin.map((d) => {
+      d.date = parseDate(d.date);
+      d.price = +d.price;
+      return d;
+    });
+    console.log('随机数', d3.extent(data, function(d) { return d.date; }));
+    x.domain(d3.extent(data, function(d) { return d.date; }));    //定义域
+    y.domain([0, d3.max(data, function(d) { return d.price; })]);    //值域
+
+      g.append("path")
+          .datum(data)
+          .attr("class", "area")
+          .attr("d", area);
+    
+      g.append("g")
+          .attr("class", "axis axis--x")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
+    
+      g.append("g")
+          .attr("class", "axis axis--y")
+          .call(yAxis);
+      
+      g.append("g")
+          .attr("class", "ss")
+          .call(ryAxis);
+    
+      var d0 = new Date(2003, 0, 1),
+          d1 = new Date(2004, 0, 1);
+    
+      // Gratuitous intro zoom!
+      svg.call(zoom).transition()
+          .duration(3500)
+          .call(zoom.transform, d3.zoomIdentity
+              .scale(width / (x(d1) - x(d0)))
+              .translate(-x(d0), 0));
+  }
+
+  pie_chart(){
+    let data = [
+      {
+        name: "JavaScript",
+        proportion: 0.22
+      },
+      {
+        name: "C",
+        proportion: 0.24
+      },
+      {
+        name: "Java",
+        proportion: 0.14
+      },
+      {
+        name: "RUBY",
+        proportion: 0.16
+      },
+      {
+        name: "PERL",
+        proportion: 0.24
+      }
+    ];
+    const svg = d3.select('.pie_chart')
+      .append('svg')
+      .attr('width', 200)
+      .attr('height', 200)
+      .attr('style', "background-color: #222;");
+
+    const pie = d3.pie()
+      .value(data);
+    console.log(pie)
   }
 
   render(){
@@ -86,6 +204,8 @@ export default class D3_example extends Component {
           {this.draw()}
         </div>
         <div className="D3_line"></div>
+        <div className="zoom_to_domin"></div>
+        <div className="pie_chart"></div>
       </div>
     );
   }
