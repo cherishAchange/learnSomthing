@@ -29,15 +29,15 @@ module.exports = {
 		]
 	},
 	plugins: [
-    //new CleanWebpackPligin(['dist']),
-    //new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
+		//new CleanWebpackPligin(['dist']),
+		//new webpack.optimize.OccurenceOrderPlugin(),
+		new webpack.HotModuleReplacementPlugin(),
+		new webpack.NoEmitOnErrorsPlugin(),
 		new HtmlWebpackPlugin({
-      title: 'redux',
+			title: 'redux',
 			template: './src/index.html',
-      filename: 'index.html',
-      hash: true
+			filename: 'index.html',
+			hash: true
 		})
 	]
 }
