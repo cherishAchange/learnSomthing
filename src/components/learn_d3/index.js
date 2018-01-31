@@ -163,37 +163,15 @@ export default class D3_example extends Component {
   }
 
   pie_chart(){
-    let data = [
-      {
-        name: "JavaScript",
-        proportion: 0.22
-      },
-      {
-        name: "C",
-        proportion: 0.24
-      },
-      {
-        name: "Java",
-        proportion: 0.14
-      },
-      {
-        name: "RUBY",
-        proportion: 0.16
-      },
-      {
-        name: "PERL",
-        proportion: 0.24
-      }
-    ];
-    const svg = d3.select('.pie_chart')
+    let svg = d3.select('.pie_chart')
       .append('svg')
       .attr('width', 200)
       .attr('height', 200)
-      .attr('style', "background-color: #222;");
-
-    const pie = d3.pie()
-      .value(data);
-    console.log(pie)
+      .attr('style', "background-color: #ccc;");
+    let g = svg.append('g');
+    g.append('path')
+      .attr('d', 'M100 100 C100 100, 100 100, 50 48 C72 0, 128 0, 148 48 C100 100, 100 100, 100 100')
+      .attr('style', 'fill: #fff; stroke: red; stroke-width: 1;')
   }
 
   render(){
@@ -201,7 +179,7 @@ export default class D3_example extends Component {
       <div className="D3_example">
         <h2 className="D3_example--title">D3</h2>
         <div className="D3_example--content">
-          {this.draw()}
+          
         </div>
         <div className="D3_line"></div>
         <div className="zoom_to_domin"></div>

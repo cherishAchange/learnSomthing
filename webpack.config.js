@@ -32,7 +32,7 @@ module.exports = {
 		//new CleanWebpackPligin(['dist']),
 		//new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NoEmitOnErrorsPlugin(),
+		//new webpack.NoEmitOnErrorsPlugin(),
 		new HtmlWebpackPlugin({
 			title: 'redux',
 			template: './src/index.html',
