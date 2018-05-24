@@ -8,7 +8,7 @@
     "go": "node dev-server.js",
     "chat": "node chatServer.js"
   },
-  "author": "",
+  "author": "玛格",
   "license": "ISC",
   "dependencies": {
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
