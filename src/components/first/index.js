@@ -40,6 +40,7 @@ class First extends Component {
         return (
             <div>
                 <h2>{age}</h2>
+								<button>下载</button>
                 <button onClick={this._add}>点我加一,点</button>
             </div>
         );

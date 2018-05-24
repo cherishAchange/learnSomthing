@@ -45,7 +45,8 @@ export default class D3_example extends Component {
     // }, 1000);
     //this.draw_line();
     //this.zoom_to_domin();
-    this.pie_chart();
+    //this.pie_chart();
+    this.know_generator();
   }
 
   draw(){
@@ -174,6 +175,50 @@ export default class D3_example extends Component {
       .attr('style', 'fill: #fff; stroke: red; stroke-width: 1;')
   }
 
+  know_generator(){
+    let data = [
+      {
+        name: 'javascript',
+        proportion: 0.33
+      },
+      {
+        name: 'java',
+        proportion: 0.33
+      },
+      {
+        name: 'perl',
+        proportion: 0.34
+      }
+    ], lineData = [
+      {date: new Date(2007, 3, 24), value: 93.24},
+      {date: new Date(2007, 3, 25), value: 95.35},
+      {date: new Date(2007, 3, 26), value: 98.84},
+      {date: new Date(2007, 3, 27), value: 99.92},
+      {date: new Date(2007, 3, 30), value: 99.80},
+      {date: new Date(2007, 4,  1), value: 99.47},
+    ];
+    let arc = d3.arc(),
+        pie = d3.pie().value((d) => d.proportion).padAngle(1),
+        line = d3.line().x((d) => d.date).y((d) => d.value),
+        area = d3.area();
+    let svg = d3.select('.know_generator').append('svg')
+        .attr('width', 600)
+        .attr('height', 600)
+        .attr('style', 'background-color: #ccc;')
+      .append('g')
+        .selectAll('.pie')
+        .data(arc(pie(data)))
+        .enter()
+      .append('path')
+        .attr('class', 'pie')
+        .attr('d', arc(pie(data)))
+
+    console.log('arc',arc(pie(data)));
+    console.log('pie',pie(data));
+    console.log('line',line(lineData));
+    console.log('area',area(data));
+  }
+
   render(){
     return (
       <div className="D3_example">
@@ -184,6 +229,7 @@ export default class D3_example extends Component {
         <div className="D3_line"></div>
         <div className="zoom_to_domin"></div>
         <div className="pie_chart"></div>
+        <div className="know_generator"></div>
       </div>
     );
   }
