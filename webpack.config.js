@@ -29,7 +29,7 @@ module.exports = {
 		]
 	},
 	plugins: [
-		//new CleanWebpackPligin(['dist']),
+		new CleanWebpackPligin(['dist']),
 		//new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
 		//new webpack.NoEmitOnErrorsPlugin(),
